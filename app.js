@@ -56,33 +56,33 @@ function getTasks(e) {
 function addtask(e) {
   if (taskInput.value === "") {
     alert("Add a task!");
+  } else {
+    // Create li element
+    const li = document.createElement("li");
+    // Add class
+    li.className = "collection-item";
+    // Create text node and append to li
+    li.appendChild(document.createTextNode(taskInput.value));
+    // Create new link element
+    const link = document.createElement("a");
+    // Add class
+    link.className = "delete-item secondary-content";
+    // Add icon html
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+    // Append the link to the li
+    li.appendChild(link);
+
+    // Append li to ul
+    taskList.appendChild(li);
+
+    // Store in Local Storage
+    storeTaskinLocalStorage(taskInput.value);
+
+    // Clear input
+    taskInput.value = "";
+
+    e.preventDefault();
   }
-
-  // Create li element
-  const li = document.createElement("li");
-  // Add class
-  li.className = "collection-item";
-  // Create text node and append to li
-  li.appendChild(document.createTextNode(taskInput.value));
-  // Create new link element
-  const link = document.createElement("a");
-  // Add class
-  link.className = "delete-item secondary-content";
-  // Add icon html
-  link.innerHTML = '<i class="fa fa-remove"></i>';
-  // Append the link to the li
-  li.appendChild(link);
-
-  // Append li to ul
-  taskList.appendChild(li);
-
-  // Store in Local Storage
-  storeTaskinLocalStorage(taskInput.value);
-
-  // Clear input
-  taskInput.value = "";
-
-  e.preventDefault();
 }
 
 // Store Task function
@@ -141,6 +141,14 @@ function clearTasks(e) {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
+
+  // Clear from Local Storage
+  clearTasksFromLocalStorage();
+}
+
+// Clear Tasks from Local Storage Function
+function clearTasksFromLocalStorage() {
+  localStorage.clear();
 }
 
 // Filter tasks function
