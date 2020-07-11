@@ -44,10 +44,31 @@ function addtask(e) {
   // Append li to ul
   taskList.appendChild(li);
 
+  // Store in Local Storage
+  storeTaskinLocalStorage(taskInput.value);
+
   // Clear input
   taskInput.value = "";
 
   e.preventDefault();
+}
+
+// Store Task function
+function storeTaskinLocalStorage(task) {
+  let tasks;
+  // If there is nothing in the local storage in the key tasks then set it up as an empty array
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    // otherwise get the array and set it to tasks variable
+    // since the local storage stores strings only of json data then we need to parse it to a regular array using JSON.parse()
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  //Then we push the task to the array tasks;
+  tasks.push(task);
+  //then we set the Local Storage with the new added task
+  // we need to transform the array of tasks to a JSON string so we use the JSON.stringify() method;
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Remove task function
